@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Device Detection</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"></script>
+<title>Device Info</title>
 </head>
 <body>
-<!-- Добавим элементы для вывода информации -->
-<div id="deviceInfo"></div>
+<p id="deviceInfo"></p>
 
+<script src="js/mobile-detect.min.js"></script>
 <script>
-// Определение характеристик устройства
-var deviceInfo = platform.parse(navigator.userAgent);
+var md = new MobileDetect(window.navigator.userAgent);
 
-// Формирование текста с информацией о устройстве
-var deviceText = "Device Brand: " + deviceInfo.manufacturer + "<br>" +
-                 "Device Model: " + deviceInfo.product;
-
-// Вывод информации о устройстве на страницу
-document.getElementById("deviceInfo").innerHTML = deviceText;
+var brand = md.phone() || md.tablet() || md.mobile() || md.userAgent();
+var model = md.mobile();
+if (model) {
+    var deviceInfo = 'Бренд устройства: ' + brand + '<br> Модель устройства: ' + model;
+    document.getElementById('deviceInfo').innerHTML = deviceInfo;
+} else {
+    document.getElementById('deviceInfo').innerHTML = 'Устройство не определено';
+}
 </script>
 </body>
 </html>
