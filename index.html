@@ -8,18 +8,15 @@
 <body>
 <p id="deviceInfo"></p>
 
-<script src="mobile-detect.min.js"></script>
+<script src="https://wurfl.io/wurfl.js"></script>
 <script>
-var md = new MobileDetect(window.navigator.userAgent);
-
-var brand = md.phone() || md.tablet() || md.mobile() || md.userAgent();
-var model = md.mobile();
-if (model) {
-    var deviceInfo = 'Бренд устройства: ' + brand + '<br> Модель устройства: ' + model;
-    document.getElementById('deviceInfo').innerHTML = deviceInfo;
-} else {
-    document.getElementById('deviceInfo').innerHTML = 'Устройство не определено';
-}
+document.addEventListener("WurflJSDetectionComplete", function(){
+    ga('send', 'pageview', {
+        'dimension1': WURFL.complete_device_name,
+        'dimension2': WURFL.form_factor,
+        'dimension3': WURFL.is_mobile,
+    })
+})
 </script>
 </body>
 </html>
